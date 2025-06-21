@@ -7,8 +7,10 @@ from dotenv import load_dotenv
 from google.generativeai.types import content_types
 import mimetypes
 import re
+import httpx
+import requests
 
-load_dotenv()
+load_dotenv(override=True)
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
@@ -88,3 +90,81 @@ async def analyze_food_image(file: UploadFile = File(...)):
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
+
+@app.post("/print-food-names")
+async def print_food_names(file: UploadFile = File(...)):
+    response = await analyze_food_image(file)
+
+    if response.status_code != 200:
+        return response
+
+    result = json.loads(response.body)
+    items = result.get("items", [])
+    enriched_items = []
+
+    for item in items:
+        name = item.get("name", "")
+        quantity = item.get("quantity", {})
+
+        if "count" in quantity:
+            entry = f"{quantity['count']} {name}"
+        elif "container" in quantity and "size" in quantity:
+            entry = f"{quantity['size']} {quantity['container']} {name}"
+        else:
+            entry = name  # fallback
+
+        # Fetch nutrition data for the entry
+        nutrition = await fetch_nutritionix_data(entry)
+        item["nutrition"] = nutrition
+
+        enriched_items.append(item)
+
+    return {"items": enriched_items}
+
+
+
+
+@app.post("/nutritionix-search")
+async def fetch_nutritionix_data(query: str):
+    try:
+        app_id = os.getenv("NUTRITIONIX_APP_ID")
+        api_key = os.getenv("NUTRITIONIX_API_KEY")
+
+        if not app_id or not api_key:
+            return {"error": "Missing Nutritionix credentials."}
+
+        headers = {
+            "x-app-id": app_id,
+            "x-app-key": api_key,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+
+        body = {"query": query}
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "https://trackapi.nutritionix.com/v2/natural/nutrients",
+                headers=headers,
+                json=body
+            )
+
+        if response.status_code != 200:
+            return {"error": f"Nutritionix API error: {response.text}"}
+
+        data = response.json()
+        food = data.get("foods", [{}])[0]
+
+        return {
+            "serving_qty": food.get("serving_qty"),
+            "serving_unit": food.get("serving_unit"),
+            "serving_weight_grams": food.get("serving_weight_grams"),
+            "nf_calories": food.get("nf_calories"),
+            "nf_total_fat": food.get("nf_total_fat"),
+            "nf_total_carbohydrate": food.get("nf_total_carbohydrate"),
+            "nf_protein": food.get("nf_protein")
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
