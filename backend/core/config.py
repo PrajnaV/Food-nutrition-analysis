@@ -23,8 +23,19 @@ For each item, return:
 - "quantity":
     - If the item is countable (like idli, banana), use:
         { "count": <int> }
-    - If the item is uncountable (like rice, curry), use:
-        { "container": "<bowl|cup|glass>", "size": "<small|medium|large>" }
+    - If the item is uncountable (like rice, sambar, chutney), use:
+        { "container": "<cup|bowl|glass|large bowl>" }
+Use the following reference sizes to estimate quantity more accurately:
+- cup: 150 ml  
+- bowl: 250 ml  
+- glass: 350 ml  
+- large bowl: 500 ml  
+
+When estimating:
+- Count visible discrete items like idlis or pooris.
+- Use context to judge how full a bowl or glass is, and choose the closest container name from the list above.
+- Always include either "count" or  "container"  for each food item.
+
 - Do not list ingredients separately if they belong to a known, unified dish (e.g., list "burger" not "bun", "patty", etc.)
 Return only valid JSON in the following format:
 
@@ -41,8 +52,7 @@ Return only valid JSON in the following format:
       "name": "rice",
       "confidence": 0.88,
       "quantity": {
-        "container": "plate",
-        "size": "medium"
+        "container": "bowl",
       }
     }
   ]

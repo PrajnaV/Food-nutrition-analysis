@@ -1,11 +1,20 @@
 import json
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from Utils.gemini_analyzer import analyze_food_image
 from Utils.nutritionix import fetch_nutritionix_data 
 
 
 app = FastAPI()
 
+# CORS middleware: allow frontend to talk to backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():
@@ -30,8 +39,8 @@ async def get_nutritional_info(file: UploadFile = File(...)):
 
         if "count" in quantity:
             entry = f"{quantity['count']} {name}"
-        elif "container" in quantity and "size" in quantity:
-            entry = f"{quantity['size']} {quantity['container']} {name}"
+        elif "container" in quantity:
+            entry = f"{quantity['container']} {name}"
         else:
             entry = name  # fallback
 
