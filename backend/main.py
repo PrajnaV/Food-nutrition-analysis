@@ -33,6 +33,15 @@ async def get_nutritional_info(file: UploadFile = File(...)):
     items = result.get("items", [])
     enriched_items = []
 
+    # Define container capacities (in grams)
+    container_capacities = {
+        "cup": 150,
+        "bowl": 250,
+        "glass": 350,
+        "large bowl": 500,
+        # Add more containers as needed
+    }
+
     for item in items:
         name = item.get("name", "")
         quantity = item.get("quantity", {})
@@ -46,8 +55,22 @@ async def get_nutritional_info(file: UploadFile = File(...)):
 
         # Fetch nutrition data for the entry
         nutrition = await fetch_nutritionix_data(entry)
-        item["nutrition"] = nutrition
 
+        # If quantity is defined in terms of container, scale nutrients
+        if "container" in quantity:
+            container = quantity["container"]
+            container_capacity = container_capacities.get(container)
+            serving_weight = nutrition.get("serving_weight_grams")
+            if container_capacity and serving_weight:
+                ratio = container_capacity / serving_weight
+                for key in [
+                    "nf_calories", "nf_total_fat", "nf_total_carbohydrate", "nf_protein"
+                ]:
+                    if nutrition.get(key) is not None:
+                        nutrition[key] = round(nutrition[key] * ratio, 2)
+                nutrition["serving_weight_grams"] = round(container_capacity, 2)
+
+        item["nutrition"] = nutrition
         enriched_items.append(item)
 
     return {"items": enriched_items}

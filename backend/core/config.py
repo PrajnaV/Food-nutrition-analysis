@@ -26,10 +26,10 @@ For each item, return:
     - If the item is uncountable (like rice, sambar, chutney), use:
         { "container": "<cup|bowl|glass|large bowl>" }
 Use the following reference sizes to estimate quantity more accurately:
-- cup: 150 ml  
-- bowl: 250 ml  
-- glass: 350 ml  
-- large bowl: 500 ml  
+- cup: 150 g  
+- bowl: 250 g  
+- glass: 350 g  
+- large bowl: 500 g  
 
 When estimating:
 - Count visible discrete items like idlis or pooris.
