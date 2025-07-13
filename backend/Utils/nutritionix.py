@@ -38,7 +38,8 @@ async def fetch_nutritionix_data(query: str):
             "nf_calories": food.get("nf_calories"),
             "nf_total_fat": food.get("nf_total_fat"),
             "nf_total_carbohydrate": food.get("nf_total_carbohydrate"),
-            "nf_protein": food.get("nf_protein")
+            "nf_protein": food.get("nf_protein"),
+            "nf_sugars": food.get("nf_sugars")
         }
 
     except Exception as e:

@@ -43,7 +43,8 @@ async def fetch_food_data(name: str):
                 "Energy": "nf_calories",
                 "Protein": "nf_protein",
                 "Carbohydrate, by difference": "nf_total_carbohydrate",
-                "Total lipid (fat)": "nf_total_fat"
+                "Total lipid (fat)": "nf_total_fat",
+                "Sugars, total including NLEA": "nf_sugars"
             }
             result = {}
             for n in nutrients:

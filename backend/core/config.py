@@ -37,6 +37,10 @@ When estimating:
 - Always include either "count" or  "container"  for each food item.
 
 - Do not list ingredients separately if they belong to a known, unified dish (e.g., list "burger" not "bun", "patty", etc.)
+
+Also, generate a brief, natural-sounding one-line description of the plate in human English, summarizing the meal as you would describe it to a friend. For example:
+"A plate with 4 idlis served alongside a bowl of sambar, a cup of red chutney, and a cup of green chutney."
+Include this one-liner under a key called "description". The description should read smoothly and clearly convey the main and side dishes together, without explicitly separating them.
 Return only valid JSON in the following format:
 
 {
@@ -49,14 +53,15 @@ Return only valid JSON in the following format:
       }
     },
     {
-      "name": "rice",
+      "name": "sambar",
       "confidence": 0.88,
       "quantity": {
         "container": "bowl",
       }
     }
-  ]
+  ],
+  "description": "3 idlis with 1 bowl sambar"
 }
 
-Do not include any explanation, description, or markdown — only return pure JSON.
+Only return pure JSON.
 """
