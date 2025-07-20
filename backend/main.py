@@ -31,6 +31,7 @@ async def get_nutritionix_nutritional_info(file: UploadFile = File(...)):
 
     result = json.loads(response.body)
     items = result.get("items", [])
+    description = result.get("description", "")
     enriched_items = []
 
     # Define container capacities (in grams)
@@ -75,7 +76,7 @@ async def get_nutritionix_nutritional_info(file: UploadFile = File(...)):
         item["nutrition"] = nutrition
         enriched_items.append(item)
 
-    return {"items": enriched_items}
+    return {"items": enriched_items,"description": description}
 
 
 @app.post("/get-usda-nutritional-info")
