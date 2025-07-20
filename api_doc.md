@@ -69,7 +69,7 @@ http://localhost:8000
     ],
     "description": "Five samosas served with a bowl of green chutney."
     }
-    }
+    
     ```
 
 ---
