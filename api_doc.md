@@ -27,6 +27,7 @@ http://localhost:8000
   - Body: `file` (image file, required)
 
 - **Response:**
+
   - 200 OK
   - JSON:
 
