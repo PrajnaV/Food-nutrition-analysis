@@ -29,16 +29,17 @@ http://localhost:8000
 - **Response:**
   - 200 OK
   - JSON:
+
     ```json
     {
-    "items": [
+      "items": [
         {
-        "name": "Samosa",
-        "confidence": 0.95,
-        "quantity": {
+          "name": "Samosa",
+          "confidence": 0.95,
+          "quantity": {
             "count": 5
-        },
-        "nutrition": {
+          },
+          "nutrition": {
             "serving_qty": 5,
             "serving_unit": "samosa",
             "serving_weight_grams": 500,
@@ -47,15 +48,15 @@ http://localhost:8000
             "nf_total_carbohydrate": 119.53,
             "nf_protein": 17.43,
             "nf_sugars": 7.96
-        }
+          }
         },
         {
-        "name": "Green chutney",
-        "confidence": 0.9,
-        "quantity": {
+          "name": "Green chutney",
+          "confidence": 0.9,
+          "quantity": {
             "container": "bowl"
-        },
-        "nutrition": {
+          },
+          "nutrition": {
             "serving_qty": 1,
             "serving_unit": "bowl",
             "serving_weight_grams": 250,
@@ -64,12 +65,11 @@ http://localhost:8000
             "nf_total_carbohydrate": 24.57,
             "nf_protein": 12.51,
             "nf_sugars": 6.53
+          }
         }
-        }
-    ],
-    "description": "Five samosas served with a bowl of green chutney."
+      ],
+      "description": "Five samosas served with a bowl of green chutney."
     }
-    
     ```
 
 ---
@@ -91,14 +91,14 @@ http://localhost:8000
   - JSON:
     ```json
     {
-    "items": [
+      "items": [
         {
-        "name": "Idli",
-        "confidence": 0.95,
-        "quantity": {
+          "name": "Idli",
+          "confidence": 0.95,
+          "quantity": {
             "count": 4
-        },
-        "nutrition": {
+          },
+          "nutrition": {
             "nf_protein": 9.67,
             "nf_total_fat": 0.53,
             "nf_total_carbohydrate": 37.97,
@@ -107,15 +107,15 @@ http://localhost:8000
             "serving_weight_grams": 38,
             "serving_qty": 4,
             "total_weight_grams": 152
-        }
+          }
         },
         {
-        "name": "Sambar",
-        "confidence": 0.9,
-        "quantity": {
+          "name": "Sambar",
+          "confidence": 0.9,
+          "quantity": {
             "container": "bowl"
-        },
-        "nutrition": {
+          },
+          "nutrition": {
             "nf_protein": 10.82,
             "nf_total_fat": 6.78,
             "nf_total_carbohydrate": 29.43,
@@ -124,15 +124,15 @@ http://localhost:8000
             "serving_weight_grams": 250,
             "serving_qty": 1,
             "total_weight_grams": 250
-        }
+          }
         },
         {
-        "name": "Red chutney",
-        "confidence": 0.85,
-        "quantity": {
+          "name": "Red chutney",
+          "confidence": 0.85,
+          "quantity": {
             "container": "cup"
-        },
-        "nutrition": {
+          },
+          "nutrition": {
             "nf_protein": 0.49,
             "nf_total_fat": 0.09,
             "nf_total_carbohydrate": 90.9,
@@ -141,15 +141,15 @@ http://localhost:8000
             "serving_weight_grams": 150,
             "serving_qty": 1,
             "total_weight_grams": 150
-        }
+          }
         },
         {
-        "name": "Green chutney",
-        "confidence": 0.85,
-        "quantity": {
+          "name": "Green chutney",
+          "confidence": 0.85,
+          "quantity": {
             "container": "cup"
-        },
-        "nutrition": {
+          },
+          "nutrition": {
             "nf_protein": 0.49,
             "nf_total_fat": 0.09,
             "nf_total_carbohydrate": 90.9,
@@ -158,10 +158,10 @@ http://localhost:8000
             "serving_weight_grams": 150,
             "serving_qty": 1,
             "total_weight_grams": 150
+          }
         }
-        }
-    ],
-    "description": "A plate of 4 idlis served with a bowl of sambar, a cup of red chutney, and a cup of green chutney."
+      ],
+      "description": "A plate of 4 idlis served with a bowl of sambar, a cup of red chutney, and a cup of green chutney."
     }
     ```
 
@@ -172,4 +172,3 @@ http://localhost:8000
 - If an error occurs (e.g., missing API key, invalid image), the response will include an `error` field with a message.
 
 ---
-
